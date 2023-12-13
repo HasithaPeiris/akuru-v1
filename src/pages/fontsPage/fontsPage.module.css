@@ -1,0 +1,106 @@
+.header {
+  border-bottom: 1px solid #5e5e5e;
+}
+
+.headerContainer {
+  width: 1200px;
+  margin: auto;
+}
+
+.headerGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.logo {
+  flex: 1;
+  font-size: 32px;
+}
+
+.fontsSearch {
+  flex: 3;
+}
+
+.searchInput {
+  width: 100%;
+  outline: none;
+  padding: 15px 20px;
+  border: 1px solid #5e5e5e;
+  border-radius: 100px;
+  font-size: 16px;
+}
+
+.fontsPageContainer {
+  width: 1200px;
+  margin: auto;
+  margin-bottom: 50px;
+}
+
+.inputSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 50px 0;
+}
+
+.fontSizeSection {
+  flex: 2;
+  display: flex;
+  align-items: center;
+}
+
+.fontSizeValue {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.inputBox {
+  flex: 5;
+}
+
+.textInput {
+  width: 100%;
+  outline: none;
+  padding: 15px 20px;
+  border: 1px solid #ccc;
+  border-radius: 100px;
+  font-size: 16px;
+}
+
+.fontSize {
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .headerContainer {
+    width: 90%;
+  }
+
+  .headerGroup {
+    flex-direction: column;
+  }
+
+  .fontsSearch {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .fontsPageContainer {
+    width: 90%;
+  }
+
+  .inputSection {
+    flex-direction: column;
+  }
+
+  .fontSizeSection {
+    width: 90%;
+  }
+
+  .inputBox {
+    width: 100%;
+  }
+}

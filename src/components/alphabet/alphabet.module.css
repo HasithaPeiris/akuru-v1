@@ -1,0 +1,22 @@
+@import "../../fonts/fonts.css";
+
+.table {
+  border: 1px solid #ddd;
+  /* max-width: 500px; */
+  /* margin: 0 auto; */
+  border-radius: 10px;
+}
+
+.table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  color: #333;
+  padding: 10px;
+  text-align: center;
+  font-size: 28px;
+  /* border-bottom: 1px solid #ddd; */
+}

@@ -1,0 +1,35 @@
+.fontCard {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.fontName {
+  font-size: 16px;
+}
+
+.fontPreview {
+  padding: 10px 0;
+}
+
+.button {
+  right: 10px;
+  bottom: 10px;
+  position: absolute;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttonIcon {
+  font-size: 24px;
+  color: #555;
+}
+
+.button:hover {
+  background-color: #ccc;
+}
