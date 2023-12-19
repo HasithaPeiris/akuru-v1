@@ -1,18 +1,22 @@
 import styles from "./fontsPage.module.css";
 import FontCard from "../../components/fontCard/FontCard";
-import unicodeConverter from "./unicodeConverter";
-import fontFamilies from "./fontFamilies";
+import unicodeConverter from "../unicodeConverter";
+import fontFamilies from "../../fonts/fontFamilies";
 import ShowcaseImages from "./showcaseImages";
 import FontsShowcase from "../../components/fontsShowcase/FontsShowcase";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 function FontsPage() {
   const [query, setQuery] = useState("");
   const [fontSize, setFontSize] = useState(32);
   const [textInput, setText] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const keys = ["id", "name"];
+
+  const textInputRef = useRef(null);
 
   const search = (data) => {
     return fontFamilies.filter((font) =>
@@ -29,7 +33,30 @@ function FontsPage() {
     const newText = event.target.value;
     const newConvertedText = unicodeConverter(newText);
     setText(newConvertedText);
-    // localStorage.setItem("textInput", newConvertedText);
+
+    localStorage.setItem("textInput", newConvertedText);
+    localStorage.setItem("input", newText);
+  };
+
+  useEffect(() => {
+    const savedTextInput = localStorage.getItem("textInput");
+    const savedInput = localStorage.getItem("input");
+    if (savedTextInput) {
+      setText(savedTextInput);
+
+      if (textInputRef.current) {
+        textInputRef.current.value = savedInput;
+      }
+    }
+  }, []);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = search(query).slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(search(query).length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -37,7 +64,9 @@ function FontsPage() {
       <div className={styles.header}>
         <div className={styles.headerContainer}>
           <div className={styles.headerGroup}>
-            <div className={styles.logo}>Akuru</div>
+            <div className={styles.logo}>
+              <img className={styles.logoImg} src="logo2.png" alt="akuru" />
+            </div>
             <div className={styles.fontsSearch}>
               <input
                 type="text"
@@ -63,8 +92,8 @@ function FontsPage() {
               type="text"
               className={styles.textInput}
               id="text-input"
-              placeholder="Singlish වලින් ලියන්න..."
-              //value={text}
+              placeholder="කැමති දෙයක් ලියන්න..."
+              ref={textInputRef}
               onChange={handleTextChange}
             />
           </div>
@@ -83,32 +112,40 @@ function FontsPage() {
           </div>
         </div>
 
-        {/* {fontFamilies.map((font, index) => (
-          <Link to={`/fonts/${font.id}/${font.name}`}>
+        {/* {search(query).map((font, index) => (
+          <Link key={index} to={`/fonts/${font.name}`} state={{ font }}>
             <FontCard
               key={index}
-              fontFamily={font.name}
+              fontFamily={font.family}
               textInput={textInput}
               fontSize={fontSize}
             />
           </Link>
         ))} */}
 
-        {search(query).map((font, index) => (
-          <Link
-            key={index}
-            to={`/fonts/${font.name}`}
-            state={{ font }} // Pass the font object directly as state
-          >
+        {currentItems.map((font, index) => (
+          <Link key={index} to={`/fonts/${font.name}`} state={{ font }}>
             <FontCard
               key={index}
-              fontFamily={font.name}
+              fontFamily={font.family}
               textInput={textInput}
               fontSize={fontSize}
-              link={font.downloadLink}
             />
           </Link>
         ))}
+
+        {/* Pagination Controls */}
+        <div className={styles.pagination}>
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              className={currentPage === index + 1 ? styles.active : ""}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

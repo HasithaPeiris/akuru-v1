@@ -1,9 +1,7 @@
-@import "../../fonts/fonts.css";
+@import "../../globalStyles.module.css";
 
 .table {
   border: 1px solid #ddd;
-  /* max-width: 500px; */
-  /* margin: 0 auto; */
   border-radius: 10px;
 }
 
@@ -14,7 +12,7 @@
 
 .table th,
 .table td {
-  color: #333;
+  color: var(--primary-color);
   padding: 10px;
   text-align: center;
   font-size: 28px;

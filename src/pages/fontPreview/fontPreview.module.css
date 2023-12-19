@@ -1,25 +1,11 @@
-/* Add your CSS styles here */
-@import "../../fonts/fonts.css";
-
-body {
-  font-family: poppins;
-  margin: 0;
-  padding: 0;
-}
-
-header {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-}
+@import "../../globalStyles.module.css";
 
 .fontPreview {
-  padding: 20px;
+  margin-top: 20px;
 }
 
 .fontPreviewContainer {
-  width: 1200px;
+  width: var(--desktop-container-width);
   margin: auto;
 }
 
@@ -85,8 +71,52 @@ header {
   font-size: 16px;
 }
 
+/* Styling the range input */
 .fontSize {
   width: 100%;
+  cursor: pointer;
+}
+
+.fontSize::-webkit-slider-runnable-track {
+  /* Webkit (Chrome/Opera) specific styles */
+  height: 4px;
+  background-color: #ddd;
+}
+
+.fontSize::-moz-range-track {
+  /* Firefox specific styles */
+  height: 4px;
+  background-color: #ddd;
+}
+
+.fontSize::-webkit-slider-thumb {
+  /* Webkit specific styles */
+  width: 16px;
+  height: 16px;
+  background-color: #007bff;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  margin-top: -6px;
+}
+
+.fontSize::-moz-range-thumb {
+  /* Firefox specific styles */
+  width: 16px;
+  height: 16px;
+  background-color: #007bff;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  margin-top: -6px;
+}
+
+.fontSize::-moz-focus-inner {
+  border: 0;
+}
+
+.fontSize:focus,
+.fontSize:hover {
+  outline: none;
 }
 
 .bodyContent {
@@ -112,7 +142,7 @@ header {
 
 @media only screen and (max-width: 600px) {
   .fontPreviewContainer {
-    width: 100%;
+    width: var(--mobile-container-width);
   }
 
   .nameSection {
@@ -148,7 +178,7 @@ header {
 
   .bodyContent {
     flex-direction: column;
-    margin-bottom: 70px;
+    margin-bottom: 90px;
   }
 
   .alphabet {

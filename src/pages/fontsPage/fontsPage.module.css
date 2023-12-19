@@ -1,9 +1,11 @@
+@import "../../globalStyles.module.css";
+
 .header {
   border-bottom: 1px solid #5e5e5e;
 }
 
 .headerContainer {
-  width: 1200px;
+  width: var(--desktop-container-width);
   margin: auto;
 }
 
@@ -16,7 +18,11 @@
 
 .logo {
   flex: 1;
-  font-size: 32px;
+}
+
+.logoImg {
+  max-width: 120px;
+  height: auto;
 }
 
 .fontsSearch {
@@ -33,7 +39,7 @@
 }
 
 .fontsPageContainer {
-  width: 1200px;
+  width: var(--desktop-container-width);
   margin: auto;
   margin-bottom: 50px;
 }
@@ -70,13 +76,83 @@
   font-size: 16px;
 }
 
+/* Styling the range input */
 .fontSize {
   width: 100%;
+  cursor: pointer;
+}
+
+.fontSize::-webkit-slider-runnable-track {
+  /* Webkit (Chrome/Opera) specific styles */
+  height: 4px;
+  background-color: #ddd;
+}
+
+.fontSize::-moz-range-track {
+  /* Firefox specific styles */
+  height: 4px;
+  background-color: #ddd;
+}
+
+.fontSize::-webkit-slider-thumb {
+  /* Webkit specific styles */
+  width: 16px;
+  height: 16px;
+  background-color: #007bff;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  margin-top: -6px;
+}
+
+.fontSize::-moz-range-thumb {
+  /* Firefox specific styles */
+  width: 16px;
+  height: 16px;
+  background-color: #007bff;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  margin-top: -6px;
+}
+
+.fontSize::-moz-focus-inner {
+  border: 0;
+}
+
+.fontSize:focus,
+.fontSize:hover {
+  outline: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 0 4px;
+}
+
+.pagination button:hover {
+  background-color: #cccccc;
+}
+
+.pagination button.active {
+  background-color: #cccccc;
 }
 
 @media only screen and (max-width: 600px) {
   .headerContainer {
-    width: 90%;
+    width: var(--mobile-container-width);
   }
 
   .headerGroup {
@@ -89,7 +165,7 @@
   }
 
   .fontsPageContainer {
-    width: 90%;
+    width: var(--mobile-container-width);
   }
 
   .inputSection {

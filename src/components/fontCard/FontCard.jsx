@@ -3,7 +3,7 @@ import styles from "./fontCard.module.css";
 import DownloadIcon from "@mui/icons-material/Download";
 import { Link } from "react-router-dom";
 
-function FontCard({ fontFamily, textInput, fontSize, link }) {
+function FontCard({ fontFamily, textInput, fontSize }) {
   return (
     <div className={styles.fontCard}>
       <span className={styles.fontName}>{fontFamily}</span>

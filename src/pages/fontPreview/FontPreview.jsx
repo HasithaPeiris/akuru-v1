@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./fontPreview.module.css";
-import unicodeConverter from "./unicodeConverter";
-import fontFamilies from "./fontFamilies";
+import unicodeConverter from "../unicodeConverter";
 import Alphabet from "../../components/alphabet/Alphabet";
 import Symbols from "../../components/symbols/Sysmbols";
 import Paragraph from "../../components/paragraph/Paragraph";
@@ -11,10 +10,20 @@ import { Link } from "react-router-dom";
 function FontPreview() {
   const [fontSize, setFontSize] = useState(44);
   const [text, setText] = useState("");
-  const [selectedFamilyId, setSelectedFamilyId] = useState("0");
+
+  const textInputRef = useRef(null);
 
   const location = useLocation();
   const { font } = location.state;
+
+  const handleDownloadFont = (fontFile, fontName) => {
+    const link = document.createElement("a");
+    link.href = fontFile;
+    link.download = `${fontName.replace(/\s+/g, "-")}.ttf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const handleFontSizeChange = (event) => {
     const newSize = event.target.value;
@@ -25,45 +34,42 @@ function FontPreview() {
     const newText = event.target.value;
     const newConvertedText = unicodeConverter(newText);
     setText(newConvertedText);
-    // localStorage.setItem("textInput", newConvertedText);
+
+    localStorage.setItem("textInput", newConvertedText);
+    localStorage.setItem("input", newText);
   };
 
-  // Find the font family based on the selected family id
-  const selectedFamily = fontFamilies.find(
-    (family) => family.id === selectedFamilyId
-  );
+  useEffect(() => {
+    const savedTextInput = localStorage.getItem("textInput");
+    const savedInput = localStorage.getItem("input");
 
-  // Use a fallback if no family is found
-  const fontFamily = selectedFamily
-    ? selectedFamily.name
-    : "FM Abhaya, sans-serif";
+    if (savedTextInput) {
+      setText(savedTextInput);
 
-  const handleFamilyChange = (event) => {
-    setSelectedFamilyId(event.target.value);
-  };
-
-  const handleDownloadFont = () => {
-    // Replace with font download logic
-    alert("Font download functionality will be implemented here.");
-  };
+      if (textInputRef.current) {
+        textInputRef.current.value = savedInput;
+      }
+    }
+  }, []);
 
   return (
     <div className={styles.fontPreview}>
       <div className={styles.fontPreviewContainer}>
         <div className={styles.nameSection}>
-          <span className={styles.fontName}>{font.name}</span>
-          <Link to={font.downloadLink}>
-            <button
-              className={styles.downloadButton}
-              // onClick={handleDownloadFont}
-            >
-              Download Font
-            </button>
-          </Link>
+          <span className={styles.fontName}>{font.family}</span>
+
+          <button
+            className={styles.downloadButton}
+            onClick={() => handleDownloadFont(font.fontFile, font.family)}
+          >
+            Download Font
+          </button>
         </div>
 
         <div className={styles.previewBox}>
-          <p style={{ fontSize: `${fontSize}px`, fontFamily: `${font.name}` }}>
+          <p
+            style={{ fontSize: `${fontSize}px`, fontFamily: `${font.family}` }}
+          >
             {text || "leu;s fohla ,shkak'"}
           </p>
         </div>
@@ -74,8 +80,8 @@ function FontPreview() {
               type="text"
               className={styles.textInput}
               id="text-input"
-              placeholder="Singlish වලින් ලියන්න..."
-              //value={text}
+              placeholder="කැමති දෙයක් ලියන්න..."
+              ref={textInputRef}
               onChange={handleTextChange}
             />
           </div>
@@ -110,12 +116,12 @@ function FontPreview() {
 
         <dev className={styles.bodyContent}>
           <dev className={styles.alphabet}>
-            <Alphabet fontFamily={font.name} />
-            <Symbols fontFamily={font.name} />
+            <Alphabet fontFamily={font.family} />
+            <Symbols fontFamily={font.family} />
           </dev>
 
           <dev className={styles.paragraph}>
-            <Paragraph fontFamily={font.name} />
+            <Paragraph fontFamily={font.family} />
           </dev>
         </dev>
       </div>

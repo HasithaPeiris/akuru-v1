@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./paragraph.module.css";
 
 function Paragraph({ fontFamily }) {
-  const [fontSize, setFontSize] = useState(16);
+  const [fontSize, setFontSize] = useState(20);
   const [fontWeight, setFontWeight] = useState("normal");
 
   const handleFontSizeChange = (event) => {
@@ -16,8 +16,8 @@ function Paragraph({ fontFamily }) {
   return (
     <div className={styles.paragraph}>
       <div className={styles.paraContainer}>
-        <label htmlFor="fontSizeSelector">Select Font Size:</label>
         <select
+          className={styles.selector}
           id="fontSizeSelector"
           value={fontSize}
           onChange={handleFontSizeChange}
@@ -30,8 +30,8 @@ function Paragraph({ fontFamily }) {
           <option value={32}>32px</option>
         </select>
 
-        <label htmlFor="fontWeightSelector">Select Font Weight:</label>
         <select
+          className={styles.selector}
           id="fontWeightSelector"
           value={fontWeight}
           onChange={handleFontWeightChange}
