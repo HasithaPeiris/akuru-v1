@@ -14,7 +14,9 @@ function FontPreview() {
   const textInputRef = useRef(null);
 
   const location = useLocation();
-  const { font } = location.state;
+  // const { font } = location.state;
+
+  const font = location.state && location.state.font ? location.state.font : {};
 
   const handleDownloadFont = (fontFile, fontName) => {
     const link = document.createElement("a");
